@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Your Shopping Cart</h1>
+
+{% if products %}
+
+<table style="width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <thead>
+        <tr style="background-color: #333; color: white;">
+            <th style="padding: 15px; text-align: left;">Product</th>
+            <th style="padding: 15px; text-align: left;">Description</th>
+            <th style="padding: 15px; text-align: left;">Price</th>
+            <th style="padding: 15px; text-align: left;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr style="border-bottom: 1px solid #ddd;">
+            <td style="padding: 15px;">{{ product.name }}</td>
+            <td style="padding: 15px;">{{ product.description }}</td>
+            <td style="padding: 15px;">₹{{ product.price }}</td>
+            <td style="padding: 15px;">
+                <a href="/remove-from-cart/{{ product.id }}" style="background-color: red; color: white; padding: 6px 12px; text-decoration: none; border-radius: 4px;">Remove</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+<h3>Total: ₹{{ products | sum(attribute='price') }}</h3>
+<a href="/" style="background-color: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Continue Shopping</a>
+
+{% else %}
+
+<p>Your cart is empty.</p>
+<a href="/" style="background-color: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Go Shopping</a>
+
+{% endif %}
+
+{% endblock %}
